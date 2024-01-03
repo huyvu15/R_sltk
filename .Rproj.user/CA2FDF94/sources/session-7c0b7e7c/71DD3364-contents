@@ -26,6 +26,7 @@ resid(dabien)
 
 draw_resid <- par(mfrow = c(2, 2))
 
+
 plot(dabien)
 
 summary(lm(data$Open ~ data$Volume))
