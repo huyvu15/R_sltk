@@ -4,12 +4,20 @@ data <- read.csv("Finance.csv")
 View(data)
 head(data)
 print(nrow(data))
+
+par(mfrow = c(1,3))
+#plot(data$Open, data$Close, pch = 16, col = 'blue', main = "Open vs Close")
+plot(data$Volume, data$Close, pch = 16, col = 'blue', main = "Volume vs Close")
+plot(data$High, data$Close, pch = 16, col = 'blue', main = "High vs Close")
+plot(data$Low, data$Close, pch = 16, col = 'blue', main = "Low vs Close")
+
+
 #class(data$Date)
 summary(lm(data$Close ~ data$High))
-summary(lm(data$Open ~ data$Low))
+summary(lm(data$Close ~ data$Low))
+summary(lm(data$Close ~ data$Volume))
 
-
-dabien <- lm(data$Close ~ data$Open + data$High + data$Low + data$Volume)
+dabien <- lm(data$Close ~ data$High + data$Low + data$Volume)
 
 predicted_data <- data.frame(Predicted = predict(dabien), Observed = data$Close)
 summary(dabien)
@@ -21,17 +29,15 @@ ggplot(predicted_data, aes(x = Observed, y = Predicted)) +
        x = "Observed Close Price",
        y = "Predicted Close Price")
 fitted(dabien)
-
+confint(dabien)
 resid(dabien)
 
 draw_resid <- par(mfrow = c(2, 2))
 
+
 plot(dabien)
 
-summary(lm(data$Open ~ data$Volume))
-summary(lm(Open ~ High + Low, data = data))
 
-plot(data$Open)
-plot(data$Volume)
-
-
+*dabien1 <- lm(data$Close ~ data$High + data$Low)
+summary(dabien1)
+confint(dabien1)
